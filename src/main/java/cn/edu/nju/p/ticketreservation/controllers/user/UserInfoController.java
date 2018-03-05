@@ -1,23 +1,22 @@
 package cn.edu.nju.p.ticketreservation.controllers.user;
 
-import cn.edu.nju.p.ticketreservation.dao.UserDao;
 import cn.edu.nju.p.ticketreservation.po.UserInfo;
+import cn.edu.nju.p.ticketreservation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
 public class UserInfoController {
 
-    private final UserDao userDao;
-
     @Autowired
-    public UserInfoController(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    private UserService service;
 
-    @GetMapping("/email")
-    public UserInfo getUserEmail(@RequestParam("userName") String userName) {
-        return new UserInfo(userDao.getEmailByUsername(userName));
+    @GetMapping
+    public UserInfo getUserInfoByEmail(@RequestParam("email") String email) {
+        return service.getUserInfoByEmail(email);
     }
 }
