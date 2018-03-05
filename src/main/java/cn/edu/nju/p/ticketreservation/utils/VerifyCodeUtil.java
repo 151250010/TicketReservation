@@ -6,7 +6,9 @@ public class VerifyCodeUtil {
 
     private static final String VERIFY_CODES = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    public String generateVerifyCodes(int length) {
+    public static final int DEFAULT_CODE_LENGTH = 6;
+
+    public static String generateVerifyCodes(int length) {
 
         Random random = new Random(System.currentTimeMillis());
         int codesLength = VERIFY_CODES.length();
@@ -15,5 +17,9 @@ public class VerifyCodeUtil {
             result.append(VERIFY_CODES.charAt(random.nextInt(codesLength)));
         }
         return result.toString();
+    }
+
+    public static String generateVerifyCodes() {
+        return generateVerifyCodes(DEFAULT_CODE_LENGTH);
     }
 }
