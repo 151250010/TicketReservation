@@ -1,8 +1,7 @@
-package cn.edu.nju.p.ticketreservation.exception_handler;
+package cn.edu.nju.p.ticketreservation.exception;
 
 import cn.edu.nju.p.ticketreservation.base.BaseResult;
 import cn.edu.nju.p.ticketreservation.base.ErrorCode;
-import cn.edu.nju.p.ticketreservation.exception.VerifyCodeHasExistedException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
