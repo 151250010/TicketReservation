@@ -2,7 +2,7 @@ package cn.edu.nju.p.ticketreservation.service.impl;
 
 import cn.edu.nju.p.ticketreservation.dao.UserDao;
 import cn.edu.nju.p.ticketreservation.interact.input.UserRegInfo;
-import cn.edu.nju.p.ticketreservation.po.UserInfo;
+import cn.edu.nju.p.ticketreservation.interact.display.UserInfo;
 import cn.edu.nju.p.ticketreservation.service.UserService;
 import cn.edu.nju.p.ticketreservation.utils.RedisCacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;

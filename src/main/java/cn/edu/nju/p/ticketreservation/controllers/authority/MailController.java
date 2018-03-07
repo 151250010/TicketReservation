@@ -2,9 +2,8 @@ package cn.edu.nju.p.ticketreservation.controllers.authority;
 
 import cn.edu.nju.p.ticketreservation.base.BaseResult;
 import cn.edu.nju.p.ticketreservation.base.ErrorCode;
-import cn.edu.nju.p.ticketreservation.exception.UserNotRegisterException;
 import cn.edu.nju.p.ticketreservation.exception.VerifyCodeHasExistedException;
-import cn.edu.nju.p.ticketreservation.po.UserInfo;
+import cn.edu.nju.p.ticketreservation.interact.display.UserInfo;
 import cn.edu.nju.p.ticketreservation.service.LoginService;
 import cn.edu.nju.p.ticketreservation.service.MailService;
 import cn.edu.nju.p.ticketreservation.service.UserService;

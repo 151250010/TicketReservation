@@ -1,4 +1,4 @@
-package cn.edu.nju.p.ticketreservation.po;
+package cn.edu.nju.p.ticketreservation.interact.display;
 
 
 import cn.edu.nju.p.ticketreservation.enums.UserInfoState;
