@@ -8,4 +8,6 @@ public interface UserService {
     UserInfo getUserInfoByEmail(String email);
 
     void addUserInfo(UserRegInfo info);
+
+    void cancelAUser(String email);
 }

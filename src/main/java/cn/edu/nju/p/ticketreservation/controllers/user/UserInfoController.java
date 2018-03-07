@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Email;
+
 @RestController
 @RequestMapping("/user")
+@Validated
 public class UserInfoController {
 
     @Autowired
@@ -26,5 +29,9 @@ public class UserInfoController {
         return new BaseResult<>("Add a user successfully!", 0);
     }
 
-//    public BaseResult
+    @GetMapping("/cancel")
+    public BaseResult cancelUser(@RequestParam("email") @Email String email) {
+        service.cancelAUser(email);
+        return new BaseResult<>("Cancel user " + email + " successfully!", 0);
+    }
 }

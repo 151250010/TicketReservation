@@ -18,30 +18,12 @@ import java.util.List;
 @ControllerAdvice
 @Component
 @ResponseBody
-public class GlobalExceptionHandler {
+public class GlobalNormalExceptionHandler {
 
     @ExceptionHandler(VerifyCodeHasExistedException.class)
     public BaseResult handleVerifyCodeExisted(VerifyCodeHasExistedException e) {
         String message = e.getMessage();
         return new BaseResult<>(message, ErrorCode.VERIFY_CODE_EXISTED);
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public BaseResult handleValidationException(MethodArgumentNotValidException e) {
-        BindingResult bindingResult = e.getBindingResult();
-        int fieldErrorCount = bindingResult.getFieldErrorCount();
-        List<FieldError> errorList = bindingResult.getFieldErrors();
-        StringBuilder stringBuilder = new StringBuilder();
-        for (FieldError error : errorList) {
-            stringBuilder.append(error.getField())
-                    .append(":")
-                    .append(error.getRejectedValue().toString())
-                    .append(" ")
-                    .append(error.getDefaultMessage())
-                    .append(";");
-        }
-        String result = "ErrorCount : " + fieldErrorCount + " , ErrorMessage: " + stringBuilder.toString();
-        return new BaseResult<>(result, ErrorCode.PARAMETER_VALIDATED_FAILED);
     }
 
     @ExceptionHandler(DuplicateKeyException.class)

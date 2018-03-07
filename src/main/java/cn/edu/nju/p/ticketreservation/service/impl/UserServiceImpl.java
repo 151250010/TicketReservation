@@ -37,4 +37,9 @@ public class UserServiceImpl implements UserService {
         cn.edu.nju.p.ticketreservation.dao.entity.UserInfo userInfo = new cn.edu.nju.p.ticketreservation.dao.entity.UserInfo(info);
         userDao.addUser(userInfo);
     }
+
+    @Override
+    public void cancelAUser(String email) {
+        userDao.cancelUser(email);
+    }
 }
