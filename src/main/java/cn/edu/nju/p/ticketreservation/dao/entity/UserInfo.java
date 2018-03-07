@@ -1,5 +1,8 @@
 package cn.edu.nju.p.ticketreservation.dao.entity;
 
+import cn.edu.nju.p.ticketreservation.enums.UserInfoState;
+import cn.edu.nju.p.ticketreservation.interact.input.UserRegInfo;
+
 public class UserInfo {
 
     private String userName;
@@ -18,6 +21,14 @@ public class UserInfo {
 
     public UserInfo() {
 
+    }
+
+    public UserInfo(UserRegInfo info) {
+        this.userName = info.getUserName();
+        this.age = info.getAge();
+        this.sex = info.getSex();
+        this.email = info.getEmail();
+        this.infoState = UserInfoState.USER_NORMAL.getUserState();
     }
 
     public String getUserName() {

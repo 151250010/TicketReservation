@@ -1,4 +1,4 @@
-package cn.edu.nju.p.ticketreservation.controllers.mail;
+package cn.edu.nju.p.ticketreservation.controllers.authority;
 
 import cn.edu.nju.p.ticketreservation.base.BaseResult;
 import cn.edu.nju.p.ticketreservation.base.ErrorCode;
@@ -40,4 +40,5 @@ public class MailController {
             return new BaseResult<>("login failed", ErrorCode.LOGIN_FAILED);
         }
     }
+
 }

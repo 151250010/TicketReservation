@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class RedisCacheUtil {
 
 //    public static final String CACHE_NAME = "cache";
-    public static final int CACHE_TIME = 60; // 60 seconds
+    private static final int CACHE_TIME = 120; // 60 seconds
 
     @Autowired
     private StringRedisTemplate redisTemplate;
