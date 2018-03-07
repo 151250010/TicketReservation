@@ -30,6 +30,10 @@ public class UserInfo implements Serializable {
         this.sex = resolveSex(userInfo.getSex());
     }
 
+    public UserInfo() {
+
+    }
+
     private String resolveSex(int sex) {
 
         if (sex == 1) {

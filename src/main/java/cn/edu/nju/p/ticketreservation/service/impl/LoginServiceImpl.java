@@ -16,6 +16,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public String createVerifyCode(String email) throws VerifyCodeHasExistedException {
+
         if (redisCacheUtil.cacheExist(email)) {
             throw new VerifyCodeHasExistedException("A verify code has sent to your email!");
         }
