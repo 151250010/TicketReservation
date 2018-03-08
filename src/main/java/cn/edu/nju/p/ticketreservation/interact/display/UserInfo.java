@@ -24,7 +24,7 @@ public class UserInfo implements Serializable {
         this.infoState = UserInfoState.stateOf(userInfo.getInfoState());
         this.sex = resolveSex(userInfo.getSex());
         this.score = userInfo.getScore();
-        this.vipLevel = VipLevel.getVipLevel(userInfo.getScore());
+        this.vipLevel = VipLevel.getVipLevel(userInfo.getConsumption());
     }
 
     public UserInfo() {
@@ -104,14 +104,14 @@ public class UserInfo implements Serializable {
 
         VIP1,VIP2,VIP3,VIP4, VIP5;
 
-        public static VipLevel getVipLevel(double score) {
+        public static VipLevel getVipLevel(double consumption) {
             double[] levels = new double[]{0, 1000, 2000, 3000, 4000, 100000000};
             for (int i = 0; i < 5; i++) {
-                if (score >= levels[i] && score < levels[i + 1]) {
+                if (consumption >= levels[i] && consumption < levels[i + 1]) {
                     return VipLevel.values()[i];
                 }
             }
-            throw new VipScoreNotRecognizedException("The value of vip score is " + score + " ! Can not resolve.");
+            throw new VipScoreNotRecognizedException("The value of vip consumption is " + consumption + " ! Can not resolve.");
         }
 
     }

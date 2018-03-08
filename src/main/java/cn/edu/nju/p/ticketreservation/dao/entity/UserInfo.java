@@ -11,15 +11,7 @@ public class UserInfo {
     private int infoState;
     private int sex;
     private double score;
-
-    public UserInfo(String userName, String email, int age, int infoState, int sex,double score) {
-        this.userName = userName;
-        this.email = email;
-        this.age = age;
-        this.infoState = infoState;
-        this.sex = sex;
-        this.score = score;
-    }
+    private double consumption;
 
     public UserInfo() {
 
@@ -32,6 +24,7 @@ public class UserInfo {
         this.email = info.getEmail();
         this.infoState = UserInfoState.USER_NORMAL.getUserState();
         this.score = 0.0;
+        this.consumption = 0;
     }
 
     public String getUserName() {
@@ -82,6 +75,14 @@ public class UserInfo {
         this.score = score;
     }
 
+    public double getConsumption() {
+        return consumption;
+    }
+
+    public void setConsumption(double consumption) {
+        this.consumption = consumption;
+    }
+
     @Override
     public String toString() {
         return "UserInfo{" +
@@ -91,6 +92,7 @@ public class UserInfo {
                 ", infoState=" + infoState +
                 ", sex=" + sex +
                 ", score=" + score +
+                ", consumption=" + consumption +
                 '}';
     }
 }
