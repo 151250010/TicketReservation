@@ -10,13 +10,15 @@ public class UserInfo {
     private int age;
     private int infoState;
     private int sex;
+    private double score;
 
-    public UserInfo(String userName, String email, int age, int infoState, int sex) {
+    public UserInfo(String userName, String email, int age, int infoState, int sex,double score) {
         this.userName = userName;
         this.email = email;
         this.age = age;
         this.infoState = infoState;
         this.sex = sex;
+        this.score = score;
     }
 
     public UserInfo() {
@@ -29,6 +31,7 @@ public class UserInfo {
         this.sex = info.getSex();
         this.email = info.getEmail();
         this.infoState = UserInfoState.USER_NORMAL.getUserState();
+        this.score = 0.0;
     }
 
     public String getUserName() {
@@ -71,6 +74,14 @@ public class UserInfo {
         this.sex = sex;
     }
 
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
     @Override
     public String toString() {
         return "UserInfo{" +
@@ -79,6 +90,7 @@ public class UserInfo {
                 ", age=" + age +
                 ", infoState=" + infoState +
                 ", sex=" + sex +
+                ", score=" + score +
                 '}';
     }
 }

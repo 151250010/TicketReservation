@@ -9,6 +9,7 @@ public class ErrorCode {
 
     public static final int LOGIN_FAILED = 88880001;
     public static final int USER_NOT_REGISTER = 88880002;
+    public static final int VIP_SCORE_NOT_AVAILABLE = 88880003;
 
     public static final int PARAMETER_VALIDATED_FAILED = 77770001;
 

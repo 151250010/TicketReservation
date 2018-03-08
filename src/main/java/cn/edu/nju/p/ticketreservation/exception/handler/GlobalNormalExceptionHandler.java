@@ -3,6 +3,7 @@ package cn.edu.nju.p.ticketreservation.exception.handler;
 import cn.edu.nju.p.ticketreservation.base.BaseResult;
 import cn.edu.nju.p.ticketreservation.base.ErrorCode;
 import cn.edu.nju.p.ticketreservation.exception.VerifyCodeHasExistedException;
+import cn.edu.nju.p.ticketreservation.exception.VipScoreNotRecognizedException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Component;
@@ -36,4 +37,8 @@ public class GlobalNormalExceptionHandler {
         return new BaseResult<>(e.getMessage(), ErrorCode.MAIL_ADDRESS_NOT_EXIST);
     }
 
+    @ExceptionHandler(VipScoreNotRecognizedException.class)
+    public BaseResult handleVipScoreException(VipScoreNotRecognizedException e) {
+        return new BaseResult<>(e.getMessage(), ErrorCode.VIP_SCORE_NOT_AVAILABLE);
+    }
 }

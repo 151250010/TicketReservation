@@ -1,19 +1,24 @@
 package cn.edu.nju.p.ticketreservation.interact.input;
 
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Range;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 public class UserRegInfo {
 
     @Email
     private String email;
 
+    @NotBlank
     private String userName;
 
+    @Min(1)
     private int age;
 
-    @Range(min = 1,max = 2)
+    @Min(0)
+    @Max(2)
     private int sex;
 
     public String getEmail() {

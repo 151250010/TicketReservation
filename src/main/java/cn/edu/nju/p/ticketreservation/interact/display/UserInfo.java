@@ -3,6 +3,7 @@ package cn.edu.nju.p.ticketreservation.interact.display;
 
 import cn.edu.nju.p.ticketreservation.enums.UserInfoState;
 import cn.edu.nju.p.ticketreservation.exception.DbSexIntNotAvailable;
+import cn.edu.nju.p.ticketreservation.exception.VipScoreNotRecognizedException;
 
 import java.io.Serializable;
 
@@ -13,14 +14,8 @@ public class UserInfo implements Serializable {
     private UserInfoState infoState;
     private String sex;
     private int age;
-
-    public UserInfo(String email, String userName, UserInfoState infoState, String sex, int age) {
-        this.email = email;
-        this.userName = userName;
-        this.infoState = infoState;
-        this.sex = sex;
-        this.age = age;
-    }
+    private double score;
+    private VipLevel vipLevel;
 
     public UserInfo(cn.edu.nju.p.ticketreservation.dao.entity.UserInfo userInfo) {
         this.email = userInfo.getEmail();
@@ -28,6 +23,8 @@ public class UserInfo implements Serializable {
         this.age = userInfo.getAge();
         this.infoState = UserInfoState.stateOf(userInfo.getInfoState());
         this.sex = resolveSex(userInfo.getSex());
+        this.score = userInfo.getScore();
+        this.vipLevel = VipLevel.getVipLevel(userInfo.getScore());
     }
 
     public UserInfo() {
@@ -87,6 +84,38 @@ public class UserInfo implements Serializable {
         this.age = age;
     }
 
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public VipLevel getVipLevel() {
+        return vipLevel;
+    }
+
+    public void setVipLevel(VipLevel vipLevel) {
+        this.vipLevel = vipLevel;
+    }
+
+    public enum VipLevel {
+
+        VIP1,VIP2,VIP3,VIP4, VIP5;
+
+        public static VipLevel getVipLevel(double score) {
+            double[] levels = new double[]{0, 1000, 2000, 3000, 4000, 100000000};
+            for (int i = 0; i < 5; i++) {
+                if (score >= levels[i] && score < levels[i + 1]) {
+                    return VipLevel.values()[i];
+                }
+            }
+            throw new VipScoreNotRecognizedException("The value of vip score is " + score + " ! Can not resolve.");
+        }
+
+    }
+
     @Override
     public String toString() {
         return "UserInfo{" +
@@ -95,6 +124,7 @@ public class UserInfo implements Serializable {
                 ", infoState=" + infoState +
                 ", sex='" + sex + '\'' +
                 ", age=" + age +
+                ", score=" + score +
                 '}';
     }
 }
