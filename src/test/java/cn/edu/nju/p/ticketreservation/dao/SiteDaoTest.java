@@ -17,33 +17,4 @@ public class SiteDaoTest {
 
     @Autowired
     private SiteDao dao;
-
-    @Test
-    public void addSite() {
-        Site site = new Site(0,"asd","asd","asd","asd",10,10,10);
-        site.setProvince("asd");
-        site.setAvenue("asd");
-        site.setCity("asd");
-        site.setName("Test");
-        site.setSeatCountX(10);
-        site.setSeatCountY(10);
-        site.setSeatCountZ(10);
-        dao.addSite(site);
-        System.out.println("---------------------id------------------" + site.getId());
-    }
-
-    @Test
-    public void updateSite() {
-        Site site = new Site(0,"asd","asd","asd","asd",10,10,10);
-        site.setProvince("asd");
-        site.setAvenue("asd");
-        site.setCity("asd");
-        site.setName("Xihao");
-        site.setSeatCountX(10);
-        site.setSeatCountY(10);
-        site.setSeatCountZ(10);
-        dao.addSite(site);
-        site.setId(1);
-        dao.updateSite(site);
-    }
 }

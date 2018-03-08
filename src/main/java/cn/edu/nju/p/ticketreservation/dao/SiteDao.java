@@ -14,7 +14,7 @@ public interface SiteDao {
     void addSite(@Param("site") Site site);
 
     @Update("update site set province=#{site.province},city=#{site.city},avenue=#{site.avenue},name=#{site.name}," +
-            "seat_count_x=#{site.seatCountX},seat_count_y=#{site.seatCountY},seat_count_z=#{site.seatCountZ} where id=#{site.id}")
+            "seat_count_x=#{site.seatCountX},seat_count_y=#{site.seatCountY},seat_count_z=#{site.seatCountZ},check_pass=#{site.checkPass} where id=#{site.id}")
     void updateSite(@Param("site") Site site);
 
 }

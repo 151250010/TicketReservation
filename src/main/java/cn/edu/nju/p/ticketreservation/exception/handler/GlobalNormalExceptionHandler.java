@@ -41,4 +41,9 @@ public class GlobalNormalExceptionHandler {
     public BaseResult handleVipScoreException(VipScoreNotRecognizedException e) {
         return new BaseResult<>(e.getMessage(), ErrorCode.VIP_SCORE_NOT_AVAILABLE);
     }
+
+    @ExceptionHandler(NumberFormatException.class)
+    public BaseResult handleNumberFormatException(NumberFormatException e) {
+        return new BaseResult<>("Number Format Exception : " + e.getMessage(), ErrorCode.INTEGER_FORMAT_EXCEPTION);
+    }
 }

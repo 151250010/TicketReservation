@@ -33,7 +33,7 @@ public class SiteReg {
     @Min(1)
     private int seatCountZ;
 
-    private boolean checkPass = false;
+    private boolean checkPass;
 
     public SiteReg() {
 

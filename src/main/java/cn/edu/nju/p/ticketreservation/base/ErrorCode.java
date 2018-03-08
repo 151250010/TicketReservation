@@ -12,6 +12,7 @@ public class ErrorCode {
     public static final int VIP_SCORE_NOT_AVAILABLE = 88880003;
 
     public static final int PARAMETER_VALIDATED_FAILED = 77770001;
+    public static final int INTEGER_FORMAT_EXCEPTION = 77770002;
 
     public static final int DAO_DUPLICATE_KEY = 66660001;
 
