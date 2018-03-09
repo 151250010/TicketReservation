@@ -16,10 +16,10 @@ public class TokenUtil {
         return token.equals(encrypt(email));
     }
 
-    private static String encrypt(String email) {
+    public static String encrypt(String source) {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-            byte[] bytes = messageDigest.digest(email.getBytes("UTF-8"));
+            byte[] bytes = messageDigest.digest(source.getBytes("UTF-8"));
             return Hex.encodeHexString(bytes);
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             return null;
