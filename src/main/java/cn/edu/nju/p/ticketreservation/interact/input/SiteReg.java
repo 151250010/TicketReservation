@@ -1,8 +1,11 @@
 package cn.edu.nju.p.ticketreservation.interact.input;
 
+import cn.edu.nju.p.ticketreservation.enums.SiteState;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 public class SiteReg {
 
@@ -33,7 +36,8 @@ public class SiteReg {
     @Min(1)
     private int seatCountZ;
 
-    private boolean checkPass;
+    @Null
+    private SiteState siteState;
 
     public SiteReg() {
 
@@ -103,12 +107,12 @@ public class SiteReg {
         this.id = id;
     }
 
-    public boolean isCheckPass() {
-        return checkPass;
+    public SiteState getSiteState() {
+        return siteState;
     }
 
-    public void setCheckPass(boolean checkPass) {
-        this.checkPass = checkPass;
+    public void setSiteState(SiteState siteState) {
+        this.siteState = siteState;
     }
 
     @Override
@@ -122,7 +126,7 @@ public class SiteReg {
                 ", seatCountX=" + seatCountX +
                 ", seatCountY=" + seatCountY +
                 ", seatCountZ=" + seatCountZ +
-                ", checkPass=" + checkPass +
+                ", siteState=" + siteState +
                 '}';
     }
 }

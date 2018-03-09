@@ -1,6 +1,7 @@
 package cn.edu.nju.p.ticketreservation.interact.display;
 
 import cn.edu.nju.p.ticketreservation.dao.entity.Site;
+import cn.edu.nju.p.ticketreservation.enums.SiteState;
 
 import java.text.DecimalFormat;
 
@@ -14,7 +15,7 @@ public class SiteDisplay {
     private int seatCountX;
     private int seatCountY;
     private int seatCountZ;
-    private boolean checkPass;
+    private SiteState siteState;
 
     public SiteDisplay() {
     }
@@ -29,7 +30,11 @@ public class SiteDisplay {
         this.seatCountX = site.getSeatCountX();
         this.seatCountY = site.getSeatCountY();
         this.seatCountZ = site.getSeatCountZ();
-        this.checkPass = site.isCheckPass();
+        this.siteState = resolveState(site.getCheckPass());
+    }
+
+    private SiteState resolveState(int checkPass) {
+        return SiteState.getCorrespondingSiteState(checkPass);
     }
 
     private String resolveId(int id) {
@@ -101,12 +106,12 @@ public class SiteDisplay {
         this.seatCountZ = seatCountZ;
     }
 
-    public boolean isCheckPass() {
-        return checkPass;
+    public SiteState getSiteState() {
+        return siteState;
     }
 
-    public void setCheckPass(boolean checkPass) {
-        this.checkPass = checkPass;
+    public void setSiteState(SiteState siteState) {
+        this.siteState = siteState;
     }
 
     @Override
@@ -120,7 +125,7 @@ public class SiteDisplay {
                 ", seatCountX=" + seatCountX +
                 ", seatCountY=" + seatCountY +
                 ", seatCountZ=" + seatCountZ +
-                ", checkPass=" + checkPass +
+                ", siteState=" + siteState +
                 '}';
     }
 }

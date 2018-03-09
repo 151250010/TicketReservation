@@ -12,7 +12,7 @@ public class Site {
     private int seatCountX;
     private int seatCountY;
     private int seatCountZ;
-    private boolean checkPass;
+    private int checkPass;
 
     public Site(SiteReg siteReg) {
         this.province = siteReg.getProvince();
@@ -23,7 +23,7 @@ public class Site {
         this.seatCountY = siteReg.getSeatCountY();
         this.seatCountZ = siteReg.getSeatCountZ();
         this.id = Integer.valueOf(siteReg.getId());
-        this.checkPass = siteReg.isCheckPass();
+        this.checkPass = siteReg.getSiteState().ordinal();
     }
 
     public int getId() {
@@ -90,25 +90,11 @@ public class Site {
         this.seatCountZ = seatCountZ;
     }
 
-    public boolean isCheckPass() {
+    public int getCheckPass() {
         return checkPass;
     }
 
-    public void setCheckPass(boolean checkPass) {
+    public void setCheckPass(int checkPass) {
         this.checkPass = checkPass;
-    }
-
-    @Override
-    public String toString() {
-        return "Site{" +
-                "id=" + id +
-                ", province='" + province + '\'' +
-                ", city='" + city + '\'' +
-                ", avenue='" + avenue + '\'' +
-                ", name='" + name + '\'' +
-                ", seatCountX=" + seatCountX +
-                ", seatCountY=" + seatCountY +
-                ", seatCountZ=" + seatCountZ +
-                '}';
     }
 }
