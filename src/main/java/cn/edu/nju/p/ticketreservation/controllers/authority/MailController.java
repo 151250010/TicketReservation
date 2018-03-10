@@ -46,7 +46,7 @@ public class MailController {
         String emailSubject = "[Ticker Reservation] Verify For Login";
         String emailContent = "Here is your verify code to login : \r\n" + verifyCode;
         mailService.sendSimpleMail(email, emailSubject, emailContent);
-        return new BaseResult<>("OK");
+        return new BaseResult<>("OK",ErrorCode.SUCCESS);
     }
 
     @GetMapping("/check")
