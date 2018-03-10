@@ -26,4 +26,9 @@ public class SitePlanController {
     public BaseResult getSitePlan(@RequestParam("planId") int planId) {
         return new BaseResult<>(service.getPlan(planId), ErrorCode.SUCCESS);
     }
+
+    @GetMapping("/all")
+    public BaseResult getSitePlans(@RequestParam("siteId") String siteId) {
+        return new BaseResult<>(service.getAllPlan(siteId), ErrorCode.SUCCESS);
+    }
 }

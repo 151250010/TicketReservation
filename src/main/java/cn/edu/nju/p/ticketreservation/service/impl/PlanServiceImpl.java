@@ -44,8 +44,13 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     public PlanForm getPlan(int planId) {
-
         return planDao.getPlanForm(planId);
+    }
+
+    @Override
+    public List<PlanForm> getAllPlan(String siteId) {
+
+        return planDao.getAllCurrentPlans(Integer.valueOf(siteId));
     }
 
 }

@@ -82,10 +82,6 @@ public class PlanForm {
         this.planType = planType;
     }
 
-    public void setPlanType(int planType) {
-        this.planType = PlanType.convert2PlanType(planType);
-    }
-
     public int getDbPlanType() {
 
         return planType.ordinal();
