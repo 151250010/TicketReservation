@@ -43,4 +43,7 @@ public interface PlanDao {
                     ,many = @Many(select = "cn.edu.nju.p.ticketreservation.dao.SeatPriceDao.getPlanSeatPrice"))
     })
     List<PlanForm> getAllCurrentPlans(int siteId);
+
+    @Select("call insertPlanSeats(#{planId},#{x_size},#{y_size},#{seat_z},#{price})")
+    void addPlanSeats(@Param("planId") int planId, @Param("x_size") int x_size, @Param("y_size") int y_size, @Param("seat_z") int seat_z, @Param("price") double price);
 }

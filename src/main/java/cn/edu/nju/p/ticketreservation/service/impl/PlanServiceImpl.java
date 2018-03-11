@@ -3,15 +3,14 @@ package cn.edu.nju.p.ticketreservation.service.impl;
 import cn.edu.nju.p.ticketreservation.dao.PlanDao;
 import cn.edu.nju.p.ticketreservation.dao.SeatPriceDao;
 import cn.edu.nju.p.ticketreservation.exception.DateNotAvailableException;
+import cn.edu.nju.p.ticketreservation.interact.display.SiteDisplay;
 import cn.edu.nju.p.ticketreservation.interact.input.PlanForm;
 import cn.edu.nju.p.ticketreservation.interact.input.PlanSeatPriceForm;
 import cn.edu.nju.p.ticketreservation.service.PlanService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -22,23 +21,26 @@ public class PlanServiceImpl implements PlanService {
     @Autowired
     private PlanDao planDao;
 
-    @Autowired
-    private SeatPriceDao seatPriceDao;
-
     @Override
     @Transactional
-    public PlanForm addPlan(PlanForm planForm) {
+    public PlanForm addPlan(PlanForm planForm, SiteDisplay siteDisplay) {
 
         checkDate(planForm);
 
         planDao.addPlan(planForm);
 
         List<PlanSeatPriceForm> seatPriceForms = planForm.getPriceList();
+        int size_x = siteDisplay.getSeatCountX();
+        int size_y = siteDisplay.getSeatCountY();
         int planId = planForm.getPlanId();
         String siteId = planForm.getSiteId();
 
-        seatPriceDao.addPlanSeatPrice(seatPriceForms, planId, Integer.valueOf(siteId));
-        seatPriceForms.forEach(seatPriceForm -> seatPriceForm.setSiteId(siteId));
+        seatPriceForms.forEach(seatPriceForm -> {
+            seatPriceForm.setSiteId(siteId);
+            int z = seatPriceForm.getSeatZ();
+            double price = seatPriceForm.getPrice();
+            planDao.addPlanSeats(planId, size_x, size_y, z, price);
+        });
         return planForm;
     }
 
