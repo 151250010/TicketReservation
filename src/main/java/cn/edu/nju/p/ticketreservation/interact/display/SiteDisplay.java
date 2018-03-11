@@ -21,7 +21,6 @@ public class SiteDisplay {
     }
 
     public SiteDisplay(Site site) {
-
         this.id = resolveId(site.getId());
         this.province = site.getProvince();
         this.city = site.getCity();

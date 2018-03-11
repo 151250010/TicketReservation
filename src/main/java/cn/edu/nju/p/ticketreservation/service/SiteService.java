@@ -8,4 +8,6 @@ public interface SiteService {
     SiteDisplay addSite(SiteReg siteReg);
 
     void updateSite(SiteReg siteReg);
+
+    SiteDisplay getSiteInfo(String siteId);
 }

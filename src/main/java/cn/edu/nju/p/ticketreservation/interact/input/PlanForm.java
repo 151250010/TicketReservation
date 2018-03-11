@@ -80,6 +80,7 @@ public class PlanForm {
 
     public void setPlanType(PlanType planType) {
         this.planType = planType;
+
     }
 
     public int getDbPlanType() {

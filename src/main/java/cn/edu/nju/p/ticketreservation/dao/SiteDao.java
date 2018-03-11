@@ -16,4 +16,12 @@ public interface SiteDao {
     @Update("update site set province=#{site.province},city=#{site.city},avenue=#{site.avenue},name=#{site.name}," +
             "seat_count_x=#{site.seatCountX},seat_count_y=#{site.seatCountY},seat_count_z=#{site.seatCountZ},check_pass=#{site.checkPass} where id=#{site.id}")
     void updateSite(@Param("site") Site site);
+
+    @Select("select * from site where id=#{siteId}")
+//    @Results({
+////            @Result(property = "seatCountX",column = "seat_count_x"),
+////            @Result(property = "seatCountY",column = "seat_count_y"),
+////            @Result(property = "seatCountZ",column = "seat_count_z")
+////    })
+    Site getSite(int siteId);
 }

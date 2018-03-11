@@ -6,6 +6,7 @@ import cn.edu.nju.p.ticketreservation.enums.SiteState;
 import cn.edu.nju.p.ticketreservation.interact.display.SiteDisplay;
 import cn.edu.nju.p.ticketreservation.interact.input.SiteReg;
 import cn.edu.nju.p.ticketreservation.service.SiteService;
+import cn.edu.nju.p.ticketreservation.utils.RedisCacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,11 @@ public class SiteServiceImpl implements SiteService {
 
     @Autowired
     private SiteDao siteDao;
+
+    @Autowired
+    private RedisCacheUtil cacheUtil;
+
+    public static final String CACHE_POSTFIX = "_site_info";
 
     @Override
     public SiteDisplay addSite(SiteReg siteReg) {
@@ -29,4 +35,14 @@ public class SiteServiceImpl implements SiteService {
         Site site = new Site(siteReg);
         siteDao.updateSite(site);
     }
+
+    @Override
+    public SiteDisplay getSiteInfo(String siteId) {
+        if (cacheUtil.cacheExist(siteId + CACHE_POSTFIX)) {
+            return cacheUtil.getCache(siteId + CACHE_POSTFIX, SiteDisplay.class);
+        }
+        int sideIntId = Integer.valueOf(siteId);
+        return new SiteDisplay(siteDao.getSite(sideIntId));
+    }
+
 }

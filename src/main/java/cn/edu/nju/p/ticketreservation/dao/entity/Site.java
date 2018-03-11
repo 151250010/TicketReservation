@@ -26,6 +26,10 @@ public class Site {
         this.checkPass = siteReg.getSiteState().ordinal();
     }
 
+    public Site() {
+
+    }
+
     public int getId() {
         return id;
     }

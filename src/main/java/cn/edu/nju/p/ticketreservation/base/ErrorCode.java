@@ -13,7 +13,10 @@ public class ErrorCode {
 
     public static final int PARAMETER_VALIDATED_FAILED = 77770001;
     public static final int INTEGER_FORMAT_EXCEPTION = 77770002;
+    public static final int DATE_NOT_AVAILABLE = 77770003;
 
     public static final int DAO_DUPLICATE_KEY = 66660001;
+    public static final int REDIS_CONNECT_REFUSED = 66660002;
+
 
 }
