@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/site")
 public class SiteController {
@@ -26,5 +28,11 @@ public class SiteController {
     public BaseResult updateSite(@RequestBody @Validated SiteReg siteReg) {
         siteService.updateSite(siteReg);
         return new BaseResult<>("Update site successfully!", ErrorCode.SUCCESS);
+    }
+
+    @GetMapping("/all")
+    public BaseResult getAllSites() {
+        List<SiteDisplay> siteDisplays = siteService.getAllSites();
+        return new BaseResult<>(siteDisplays, ErrorCode.SUCCESS);
     }
 }

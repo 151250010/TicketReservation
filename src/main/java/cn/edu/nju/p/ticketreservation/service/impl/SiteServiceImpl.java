@@ -10,6 +10,9 @@ import cn.edu.nju.p.ticketreservation.utils.RedisCacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class SiteServiceImpl implements SiteService {
 
@@ -43,6 +46,15 @@ public class SiteServiceImpl implements SiteService {
         }
         int sideIntId = Integer.valueOf(siteId);
         return new SiteDisplay(siteDao.getSite(sideIntId));
+    }
+
+    @Override
+    public List<SiteDisplay> getAllSites() {
+
+        List<Site> sites = siteDao.getAllSites();
+        assert sites != null && sites.size() != 0 : "No Sites Found!";
+        List<SiteDisplay> siteDisplays = sites.stream().map(SiteDisplay::new).collect(Collectors.toList());
+        return siteDisplays;
     }
 
 }

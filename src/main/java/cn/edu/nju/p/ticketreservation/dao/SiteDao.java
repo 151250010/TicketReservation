@@ -4,6 +4,8 @@ import cn.edu.nju.p.ticketreservation.dao.entity.Site;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface SiteDao {
@@ -24,4 +26,8 @@ public interface SiteDao {
 ////            @Result(property = "seatCountZ",column = "seat_count_z")
 ////    })
     Site getSite(int siteId);
+
+    @Select("select * from site")
+    List<Site> getAllSites();
+
 }
