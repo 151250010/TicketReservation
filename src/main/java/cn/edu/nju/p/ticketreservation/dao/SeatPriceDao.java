@@ -14,11 +14,11 @@ public interface SeatPriceDao {
     @InsertProvider(type = SeatPricesProvider.class, method = "addPlanSeatPrice")
     void addPlanSeatPrice(@Param("seatPrices") List<PlanSeatPriceForm> seatPriceForms, @Param("planId") int planId, @Param("siteId") int siteId);
 
-    @Select("select * from plan_seatz_price where plan_id=#{planId} and site_id=#{siteId}")
+    @Select("select distinct seat_z,price from plan_seats where planId=#{planId}")
     @Results({
-            @Result(property = "siteId", column = "site_id"),
+//            @Result(property = "siteId", column = "site_id"),
             @Result(property = "seatZ", column = "seat_z"),
             @Result(property = "price", column = "price")
     })
-    PlanSeatPriceForm getPlanSeatPrice(@Param("planId") int planId, @Param("siteId") int siteId);
+    PlanSeatPriceForm getPlanSeatPrice(@Param("planId") int planId);
 }

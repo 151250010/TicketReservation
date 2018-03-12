@@ -26,6 +26,9 @@ public class PlanForm {
     @NotNull
     private String introduction;
 
+    public PlanForm() {
+    }
+
     public int getPlanId() {
         return planId;
     }

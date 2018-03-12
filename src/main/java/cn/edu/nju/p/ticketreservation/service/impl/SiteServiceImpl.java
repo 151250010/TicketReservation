@@ -41,11 +41,15 @@ public class SiteServiceImpl implements SiteService {
 
     @Override
     public SiteDisplay getSiteInfo(String siteId) {
-        if (cacheUtil.cacheExist(siteId + CACHE_POSTFIX)) {
-            return cacheUtil.getCache(siteId + CACHE_POSTFIX, SiteDisplay.class);
+
+        String key = siteId + CACHE_POSTFIX;
+        if (cacheUtil.cacheExist(key)) {
+            return cacheUtil.getCache(key, SiteDisplay.class);
         }
         int sideIntId = Integer.valueOf(siteId);
-        return new SiteDisplay(siteDao.getSite(sideIntId));
+        SiteDisplay result = new SiteDisplay(siteDao.getSite(sideIntId));
+        cacheUtil.putCacheWithExpireTime(key, result, 60 * 30);
+        return result;
     }
 
     @Override

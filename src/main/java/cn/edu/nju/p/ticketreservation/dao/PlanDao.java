@@ -26,7 +26,7 @@ public interface PlanDao {
             @Result(property = "siteId", column = "site_id"),
             @Result(property = "introduction", column = "introduction"),
             @Result(property = "planType", column = "plan_type",javaType = PlanType.class,jdbcType = JdbcType.TINYINT,typeHandler = PlanTypeHandler.class),
-            @Result(property = "priceList",column = "{planId = planid, siteId = site_id}"
+            @Result(property = "priceList",column = /*"{planId = planid}"*/"planid"
                     ,many = @Many(select = "cn.edu.nju.p.ticketreservation.dao.SeatPriceDao.getPlanSeatPrice"))
     })
     PlanForm getPlanForm(int planId);

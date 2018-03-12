@@ -3,7 +3,6 @@ package cn.edu.nju.p.ticketreservation.interact.input;
 public class PlanSeatPriceForm {
 
     private int seatZ;
-    private String siteId;
     private double price;
 
     public int getSeatZ() {
@@ -12,14 +11,6 @@ public class PlanSeatPriceForm {
 
     public void setSeatZ(int seatZ) {
         this.seatZ = seatZ;
-    }
-
-    public String getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(String siteId) {
-        this.siteId = siteId;
     }
 
     public double getPrice() {
