@@ -1,22 +1,15 @@
-package cn.edu.nju.p.ticketreservation.interact.input;
+package cn.edu.nju.p.ticketreservation.interact.display;
 
-import java.io.Serializable;
+import cn.edu.nju.p.ticketreservation.enums.SeatStatus;
 
-public class SeatForm implements Serializable{
+public class SeatDisplay {
 
-    private String siteId;
     private int x;
     private int y;
     private int z;
     private double price;
+    private SeatStatus seatStatus;
 
-    public String getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(String siteId) {
-        this.siteId = siteId;
-    }
 
     public int getX() {
         return x;
@@ -50,8 +43,11 @@ public class SeatForm implements Serializable{
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "(" + x + ',' + y + ',' + z + ")";
+    public SeatStatus getSeatStatus() {
+        return seatStatus;
+    }
+
+    public void setSeatStatus(int seatStatus) {
+        this.seatStatus = SeatStatus.resolveDBSeatStatus(seatStatus);
     }
 }

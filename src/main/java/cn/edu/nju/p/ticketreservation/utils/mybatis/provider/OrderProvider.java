@@ -15,10 +15,10 @@ public class OrderProvider {
         StringBuilder seatSql = new StringBuilder();
         for (int i = 0; i < seatForms.size(); i++) {
             SeatForm seatForm = seatForms.get(i);
-            if (i != seatForms.size() - 1) {
-                seatSql.append(seatForm.toString()).append(';');
-            } else {
+            if (i == (seatForms.size() - 1)) {
                 seatSql.append(seatForm.toString());
+            } else {
+                seatSql.append(seatForm.toString()).append(';');
             }
         }
         String sql = "insert into t_order (planId,email,orderTime,seats,orderType,orderStatus) values " +
@@ -31,7 +31,6 @@ public class OrderProvider {
                 "','" +
                 seatSql +
                 "',0,0)";
-        System.out.println(sql);
         return sql;
     }
 }

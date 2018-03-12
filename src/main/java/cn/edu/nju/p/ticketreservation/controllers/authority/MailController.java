@@ -29,9 +29,6 @@ public class MailController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RedisCacheUtil cacheUtil;
-
     @GetMapping("/verified")
     public BaseResult sendAMailForVerifying(@RequestParam("email")String email) throws VerifyCodeHasExistedException, UserNotRegisterException {
 
