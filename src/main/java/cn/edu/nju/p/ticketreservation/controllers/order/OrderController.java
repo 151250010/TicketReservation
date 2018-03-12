@@ -2,6 +2,7 @@ package cn.edu.nju.p.ticketreservation.controllers.order;
 
 import cn.edu.nju.p.ticketreservation.base.BaseResult;
 import cn.edu.nju.p.ticketreservation.base.ErrorCode;
+import cn.edu.nju.p.ticketreservation.exception.UserNotRegisterException;
 import cn.edu.nju.p.ticketreservation.interact.display.OrderDisplay;
 import cn.edu.nju.p.ticketreservation.interact.display.SiteDisplay;
 import cn.edu.nju.p.ticketreservation.interact.display.UserInfo;
@@ -40,7 +41,7 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping
-    public BaseResult insertSeatSelectionOrder(@RequestBody @Validated SeatSelectionOrder order) {
+    public BaseResult insertSeatSelectionOrder(@RequestBody @Validated SeatSelectionOrder order) throws UserNotRegisterException {
 
         OrderDisplay orderDisplay = orderService.addOrder(order);
 

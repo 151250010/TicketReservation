@@ -2,6 +2,7 @@ package cn.edu.nju.p.ticketreservation.controllers.authority;
 
 import cn.edu.nju.p.ticketreservation.base.BaseResult;
 import cn.edu.nju.p.ticketreservation.base.ErrorCode;
+import cn.edu.nju.p.ticketreservation.exception.UserNotRegisterException;
 import cn.edu.nju.p.ticketreservation.exception.VerifyCodeHasExistedException;
 import cn.edu.nju.p.ticketreservation.interact.display.UserInfo;
 import cn.edu.nju.p.ticketreservation.service.LoginService;
@@ -32,15 +33,10 @@ public class MailController {
     private RedisCacheUtil cacheUtil;
 
     @GetMapping("/verified")
-    public BaseResult sendAMailForVerifying(@RequestParam("email")String email) throws VerifyCodeHasExistedException {
+    public BaseResult sendAMailForVerifying(@RequestParam("email")String email) throws VerifyCodeHasExistedException, UserNotRegisterException {
 
         // 判断email是否已经注册，将取出的UserInfo缓存起来
-        UserInfo userInfo = userService.getUserInfoByEmail(email);
-        if (userInfo == null) {
-            return new BaseResult<>("User " + email + " has not registered. You should register first!", ErrorCode.USER_NOT_REGISTER);
-        } else {
-            cacheUtil.putCacheWithExpireTime(email + UserServiceImpl.CACHE_INFO_POSTFIX, userInfo, 60 * 30);
-        }
+        userService.getUserInfoByEmail(email);
 
         String verifyCode = loginService.createVerifyCode(email);
         String emailSubject = "[Ticker Reservation] Verify For Login";

@@ -18,5 +18,7 @@ public class ErrorCode {
     public static final int DAO_DUPLICATE_KEY = 66660001;
     public static final int REDIS_CONNECT_REFUSED = 66660002;
 
+    public static final int SITE_NOT_FOUND = 55550001;
 
+    public static final int PLAN_NOT_FOUND = 44440001;
 }

@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -24,6 +27,8 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public OrderDisplay addOrder(SeatSelectionOrder order) {
 
+        checkDate(order.getOrderTime());
+
         orderDao.addSeatSelectionOrder(order);
         int orderId = order.getOrderId();
         OrderDisplay orderDisplay = new OrderDisplay();
@@ -32,5 +37,10 @@ public class OrderServiceImpl implements OrderService {
 
         seatDao.bookSeats(order.getPlanId(), order.getSeatForms());
         return orderDisplay;
+    }
+
+    private void checkDate(String orderTime) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime orderDateTime = LocalDateTime.parse(orderTime, dateTimeFormatter);
     }
 }

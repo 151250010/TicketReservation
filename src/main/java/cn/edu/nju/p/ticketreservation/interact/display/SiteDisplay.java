@@ -2,6 +2,7 @@ package cn.edu.nju.p.ticketreservation.interact.display;
 
 import cn.edu.nju.p.ticketreservation.dao.entity.Site;
 import cn.edu.nju.p.ticketreservation.enums.SiteState;
+import cn.edu.nju.p.ticketreservation.exception.SiteNullException;
 
 import java.text.DecimalFormat;
 
@@ -21,6 +22,9 @@ public class SiteDisplay {
     }
 
     public SiteDisplay(Site site) {
+        if (site == null) {
+            throw new SiteNullException("Input Site Not Exists!");
+        }
         this.id = resolveId(site.getId());
         this.province = site.getProvince();
         this.city = site.getCity();

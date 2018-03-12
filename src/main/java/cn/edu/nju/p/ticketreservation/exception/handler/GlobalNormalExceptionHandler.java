@@ -2,9 +2,7 @@ package cn.edu.nju.p.ticketreservation.exception.handler;
 
 import cn.edu.nju.p.ticketreservation.base.BaseResult;
 import cn.edu.nju.p.ticketreservation.base.ErrorCode;
-import cn.edu.nju.p.ticketreservation.exception.DateNotAvailableException;
-import cn.edu.nju.p.ticketreservation.exception.VerifyCodeHasExistedException;
-import cn.edu.nju.p.ticketreservation.exception.VipScoreNotRecognizedException;
+import cn.edu.nju.p.ticketreservation.exception.*;
 import io.lettuce.core.RedisConnectionException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.mail.MailSendException;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @ControllerAdvice
@@ -56,6 +55,26 @@ public class GlobalNormalExceptionHandler {
 
     @ExceptionHandler(DateNotAvailableException.class)
     public BaseResult handleRedisConnectionException(DateNotAvailableException e) {
-        return new BaseResult<>( e.getMessage(), ErrorCode.DATE_NOT_AVAILABLE);
+        return new BaseResult<>(e.getMessage(), ErrorCode.DATE_NOT_AVAILABLE);
+    }
+
+    @ExceptionHandler(SiteNullException.class)
+    public BaseResult handleSiteNullException(SiteNullException e) {
+        return new BaseResult<>(e.getMessage(), ErrorCode.SITE_NOT_FOUND);
+    }
+
+    @ExceptionHandler(PlanNotExistException.class)
+    public BaseResult handlePlanNullException(PlanNotExistException e) {
+        return new BaseResult<>(e.getMessage(), ErrorCode.PLAN_NOT_FOUND);
+    }
+
+    @ExceptionHandler(DateTimeParseException.class)
+    public BaseResult handleDateTimeParseException(DateTimeParseException e) {
+        return new BaseResult<>(e.getMessage(), ErrorCode.DATE_NOT_AVAILABLE);
+    }
+
+    @ExceptionHandler(UserNotRegisterException.class)
+    public BaseResult handleUserNotRegister(UserNotRegisterException e) {
+        return new BaseResult<>(e.getMessage(), ErrorCode.USER_NOT_REGISTER);
     }
 }

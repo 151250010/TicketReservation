@@ -3,6 +3,7 @@ package cn.edu.nju.p.ticketreservation.service.impl;
 import cn.edu.nju.p.ticketreservation.dao.PlanDao;
 import cn.edu.nju.p.ticketreservation.dao.SeatPriceDao;
 import cn.edu.nju.p.ticketreservation.exception.DateNotAvailableException;
+import cn.edu.nju.p.ticketreservation.exception.PlanNotExistException;
 import cn.edu.nju.p.ticketreservation.interact.display.SiteDisplay;
 import cn.edu.nju.p.ticketreservation.interact.input.PlanForm;
 import cn.edu.nju.p.ticketreservation.interact.input.PlanSeatPriceForm;
@@ -83,6 +84,9 @@ public class PlanServiceImpl implements PlanService {
             return cacheUtil.getCache(key, PlanForm.class);
         } else {
             PlanForm result = planDao.getPlanForm(planId);
+            if (result == null) {
+                throw new PlanNotExistException("Plan of " + planId + " Not exist!");
+            }
             cacheUtil.putCacheWithExpireTime(key, result, 60 * 30);
             return result;
         }

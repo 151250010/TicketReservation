@@ -2,6 +2,7 @@ package cn.edu.nju.p.ticketreservation.controllers.user;
 
 import cn.edu.nju.p.ticketreservation.base.BaseResult;
 import cn.edu.nju.p.ticketreservation.base.ErrorCode;
+import cn.edu.nju.p.ticketreservation.exception.UserNotRegisterException;
 import cn.edu.nju.p.ticketreservation.interact.input.UserRegInfo;
 import cn.edu.nju.p.ticketreservation.interact.display.UserInfo;
 import cn.edu.nju.p.ticketreservation.service.UserService;
@@ -21,11 +22,8 @@ public class UserInfoController {
     @Autowired
     private UserService service;
 
-    @Autowired
-    private RedisCacheUtil cacheUtil;
-
     @GetMapping
-    public UserInfo getUserInfoByEmail(@RequestParam("email") String email) {
+    public UserInfo getUserInfoByEmail(@RequestParam("email") String email) throws UserNotRegisterException {
         return service.getUserInfoByEmail(email);
     }
 
@@ -36,15 +34,10 @@ public class UserInfoController {
     }
 
     @GetMapping("/cancel")
-    public BaseResult cancelUser(@RequestParam("email") @Email String email) {
+    public BaseResult cancelUser(@RequestParam("email") @Email String email) throws UserNotRegisterException {
 
         // 判断email是否已经注册，将取出的UserInfo缓存起来
-        UserInfo userInfo = service.getUserInfoByEmail(email);
-        if (userInfo == null) {
-            return new BaseResult<>("User " + email + " has not registered.", ErrorCode.USER_NOT_REGISTER);
-        } else {
-            cacheUtil.putCacheWithExpireTime(email + UserServiceImpl.CACHE_INFO_POSTFIX, userInfo, 60 * 30);
-        }
+        service.getUserInfoByEmail(email);
 
         service.cancelAUser(email);
         return new BaseResult<>("Cancel user " + email + " successfully!", 0);
