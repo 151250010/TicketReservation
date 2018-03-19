@@ -41,4 +41,17 @@ public interface OrderDao{
             @Result(property = "site",column = "siteId",one = @One(select = "cn.edu.nju.p.ticketreservation.dao.SiteDao.getSite"))
     })
     OrderEntity getOrder(@Param("orderId") int orderId);
+
+    @Select("select * from t_order where email=#{email}")
+    @Results({
+            @Result(property = "orderId",column = "orderId"),
+            @Result(property = "totalMoney",column = "totalMoney"),
+            @Result(property = "seats",column = "seats"),
+            @Result(property = "orderType",column = "orderType"),
+            @Result(property = "orderStatus",column = "orderStatus"),
+            @Result(property = "userInfo",column = "email",one = @One(select = "cn.edu.nju.p.ticketreservation.dao.UserDao.getUserInfoByEmail")),
+            @Result(property = "planForm",column = "planId",one = @One(select = "cn.edu.nju.p.ticketreservation.dao.PlanDao.getPlanForm")),
+            @Result(property = "site",column = "siteId",one = @One(select = "cn.edu.nju.p.ticketreservation.dao.SiteDao.getSite"))
+    })
+    List<OrderEntity> getAllUserOrders(@Param("email") String email);
 }

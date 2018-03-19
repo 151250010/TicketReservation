@@ -26,5 +26,4 @@ public class MoneyController {
         return new BaseResult<>("Money has already payed for the order!", ErrorCode.SUCCESS);
     }
 
-
 }
