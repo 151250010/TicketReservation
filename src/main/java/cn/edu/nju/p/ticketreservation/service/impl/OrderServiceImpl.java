@@ -27,7 +27,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public OrderDisplay addOrder(SeatSelectionOrder order) {
 
-        checkDate(order.getOrderTime());
+        updateDate(order);
 
         orderDao.addSeatSelectionOrder(order);
         int orderId = order.getOrderId();
@@ -39,8 +39,14 @@ public class OrderServiceImpl implements OrderService {
         return orderDisplay;
     }
 
-    private void checkDate(String orderTime) {
+    private void updateDate(SeatSelectionOrder order) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentTime = formatter.format(LocalDateTime.now());
+        order.setOrderTime(currentTime);
+    }
+
+    /*private void checkDate(String orderTime) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime orderDateTime = LocalDateTime.parse(orderTime, dateTimeFormatter);
-    }
+    }*/
 }

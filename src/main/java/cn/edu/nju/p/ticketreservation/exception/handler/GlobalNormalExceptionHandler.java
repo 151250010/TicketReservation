@@ -77,4 +77,14 @@ public class GlobalNormalExceptionHandler {
     public BaseResult handleUserNotRegister(UserNotRegisterException e) {
         return new BaseResult<>(e.getMessage(), ErrorCode.USER_NOT_REGISTER);
     }
+
+    @ExceptionHandler(MoneyNotEnoughException.class)
+    public BaseResult moneyNotEnough(MoneyNotEnoughException e) {
+        return new BaseResult<>(e.getMessage(), ErrorCode.MONEY_NOT_ENOUGH);
+    }
+
+    @ExceptionHandler(OrderCancelledException.class)
+    public BaseResult orderHasCancelled(OrderCancelledException e) {
+        return new BaseResult<>(e.getMessage(), ErrorCode.ORDER_HAS_CANCELLED);
+    }
 }

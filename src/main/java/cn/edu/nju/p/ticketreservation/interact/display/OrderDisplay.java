@@ -52,4 +52,5 @@ public class OrderDisplay {
     public void setSeatForms(List<SeatForm> seatForms) {
         this.seatForms = seatForms;
     }
+
 }

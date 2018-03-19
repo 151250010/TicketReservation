@@ -7,14 +7,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Mapper
-public interface OrderDao {
+public interface OrderDao{
 
-//    @Insert("insert into order (planId,email,orderTime,seats,orderType,orderStatus) values " +
-//            "(#{order.planId},#{order.userEmail},#{order.orderTime},'" +
-//            "${order.getSeatForms().toString()}" +
-//            "',0,0)")
     @InsertProvider(type = OrderProvider.class,method = "insertOrder")
-    @Options(keyProperty = "orderId", keyColumn = "orderId", useGeneratedKeys = true)
+    @Options(keyProperty = "order.orderId", keyColumn = "orderId", useGeneratedKeys = true)
     void addSeatSelectionOrder(@Param("order") SeatSelectionOrder order);
 
+    @Update("update t_order set orderStatus=#{status} where orderId=#{orderId}")
+    void changeOrderStatus(@Param("orderId") int orderId, @Param("status") int status);
+
+    @Select("select orderStatus from t_order where orderId=#{orderId}")
+    int getOrderStatus(@Param("orderId") int orderId);
 }

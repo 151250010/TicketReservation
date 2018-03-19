@@ -1,5 +1,6 @@
 package cn.edu.nju.p.ticketreservation.service.impl;
 
+import cn.edu.nju.p.ticketreservation.dao.MoneyDao;
 import cn.edu.nju.p.ticketreservation.dao.UserDao;
 import cn.edu.nju.p.ticketreservation.exception.UserNotRegisterException;
 import cn.edu.nju.p.ticketreservation.interact.input.UserRegInfo;
@@ -8,6 +9,7 @@ import cn.edu.nju.p.ticketreservation.service.UserService;
 import cn.edu.nju.p.ticketreservation.utils.RedisCacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -16,6 +18,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private MoneyDao moneyDao;
 
     @Autowired
     private RedisCacheUtil cacheUtil;
@@ -40,9 +45,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void addUserInfo(UserRegInfo info) {
-
         cn.edu.nju.p.ticketreservation.dao.entity.UserInfo userInfo = new cn.edu.nju.p.ticketreservation.dao.entity.UserInfo(info);
+        moneyDao.addMoneyAccount(info.getEmail());
         userDao.addUser(userInfo);
     }
 

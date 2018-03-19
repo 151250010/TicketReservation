@@ -4,19 +4,10 @@ import java.io.Serializable;
 
 public class SeatForm implements Serializable{
 
-    private String siteId;
     private int x;
     private int y;
     private int z;
     private double price;
-
-    public String getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(String siteId) {
-        this.siteId = siteId;
-    }
 
     public int getX() {
         return x;

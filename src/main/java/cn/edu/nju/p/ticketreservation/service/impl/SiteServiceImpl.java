@@ -1,5 +1,6 @@
 package cn.edu.nju.p.ticketreservation.service.impl;
 
+import cn.edu.nju.p.ticketreservation.dao.MoneyDao;
 import cn.edu.nju.p.ticketreservation.dao.SiteDao;
 import cn.edu.nju.p.ticketreservation.dao.entity.Site;
 import cn.edu.nju.p.ticketreservation.enums.SiteState;
@@ -9,7 +10,9 @@ import cn.edu.nju.p.ticketreservation.service.SiteService;
 import cn.edu.nju.p.ticketreservation.utils.RedisCacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,15 +23,20 @@ public class SiteServiceImpl implements SiteService {
     private SiteDao siteDao;
 
     @Autowired
+    private MoneyDao moneyDao;
+
+    @Autowired
     private RedisCacheUtil cacheUtil;
 
     public static final String CACHE_POSTFIX = "_site_info";
 
     @Override
+    @Transactional
     public SiteDisplay addSite(SiteReg siteReg) {
         siteReg.setSiteState(SiteState.WAITING_REG_PASS);
         Site site = new Site(siteReg);
         siteDao.addSite(site);
+        moneyDao.addMoneyAccount(new DecimalFormat("0000000").format(site.getId()));
         return new SiteDisplay(site);
     }
 
@@ -57,8 +65,7 @@ public class SiteServiceImpl implements SiteService {
 
         List<Site> sites = siteDao.getAllSites();
         assert sites != null && sites.size() != 0 : "No Sites Found!";
-        List<SiteDisplay> siteDisplays = sites.stream().map(SiteDisplay::new).collect(Collectors.toList());
-        return siteDisplays;
+        return sites.stream().map(SiteDisplay::new).collect(Collectors.toList());
     }
 
 }

@@ -22,7 +22,6 @@ public class SitePlanController {
 
     @PostMapping
     public BaseResult addSitePlan(@RequestBody @Validated PlanForm planForm) {
-
         String siteId = planForm.getSiteId();
         SiteDisplay siteDisplay = siteService.getSiteInfo(siteId);
         PlanForm planWithId =  service.addPlan(planForm,siteDisplay);

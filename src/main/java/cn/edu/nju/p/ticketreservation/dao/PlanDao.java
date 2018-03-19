@@ -14,7 +14,7 @@ import java.util.List;
 public interface PlanDao {
 
     @Insert("insert into site_plan (plan_type,site_id,introduction,start,end) values " +
-            "(${plan.getDbPlanType()},#{plan.siteId},#{plan.introduction},#{plan.start},#{plan.end})")
+            "(${plan.getPlanType().ordinal()},#{plan.siteId},#{plan.introduction},#{plan.start},#{plan.end})")
     @Options(useGeneratedKeys = true, keyProperty = "plan.planId", keyColumn = "planid")
     void addPlan(@Param("plan") PlanForm planForm);
 
@@ -39,7 +39,7 @@ public interface PlanDao {
             @Result(property = "siteId", column = "site_id"),
             @Result(property = "introduction", column = "introduction"),
             @Result(property = "planType", column = "plan_type",javaType = PlanType.class,jdbcType = JdbcType.TINYINT,typeHandler = PlanTypeHandler.class),
-            @Result(property = "priceList",column = "{planId = planid, siteId = site_id}"
+            @Result(property = "priceList",column = "planid"
                     ,many = @Many(select = "cn.edu.nju.p.ticketreservation.dao.SeatPriceDao.getPlanSeatPrice"))
     })
     List<PlanForm> getAllCurrentPlans(int siteId);
