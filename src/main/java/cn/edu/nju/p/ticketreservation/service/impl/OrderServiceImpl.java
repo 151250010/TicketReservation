@@ -1,9 +1,11 @@
 package cn.edu.nju.p.ticketreservation.service.impl;
 
+import cn.edu.nju.p.ticketreservation.dao.MoneyDao;
 import cn.edu.nju.p.ticketreservation.dao.OrderDao;
 import cn.edu.nju.p.ticketreservation.dao.SeatDao;
 import cn.edu.nju.p.ticketreservation.dao.UserDao;
 import cn.edu.nju.p.ticketreservation.dao.entity.OrderEntity;
+import cn.edu.nju.p.ticketreservation.enums.OrderStatus;
 import cn.edu.nju.p.ticketreservation.exception.SeatNotEnoughException;
 import cn.edu.nju.p.ticketreservation.interact.display.OrderDisplay;
 import cn.edu.nju.p.ticketreservation.interact.display.SeatDisplay;
@@ -35,6 +37,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private MoneyDao moneyDao;
 
     @Autowired
     private RedisCacheUtil cacheUtil;
@@ -90,12 +95,72 @@ public class OrderServiceImpl implements OrderService {
     public OrderDisplay getOrder(int orderId) {
 
         String key = orderId + CACHE_ORDER_POSTFIX;
-        if (cacheUtil.cacheExist(key)) {
+        /*if (cacheUtil.cacheExist(key)) {
             return cacheUtil.getCache(key, OrderDisplay.class);
-        }
+        }*/
 
         OrderEntity orderEntity = orderDao.getOrder(orderId);
-        return new OrderDisplay(orderEntity);
+        OrderDisplay orderDisplay = new OrderDisplay(orderEntity);
+
+        cacheUtil.putCacheWithExpireTime(key, orderDisplay, 60 * 30);
+        return orderDisplay;
+    }
+
+    @Override
+    @Transactional
+    public void unsubscribe(int orderId) {
+
+        OrderDisplay orderDisplay = getOrder(orderId);
+
+        OrderStatus status = orderDisplay.getOrderStatus();
+        switch (status) {
+            case CANCELLED:
+                break;
+            case NOT_PAYED:
+                // booked seats released
+                seatDao.releaseBookedSeats(orderDisplay.getPlanForm().getPlanId(), orderDisplay.getSeatForms());
+
+                // cancel order
+                orderDao.changeOrderStatus(orderId, OrderStatus.CANCELLED.ordinal());
+                break;
+            case PAYED: {
+                // booked seats released
+                seatDao.releaseBookedSeats(orderDisplay.getPlanForm().getPlanId(), orderDisplay.getSeatForms());
+
+                // cancel order
+                orderDao.changeOrderStatus(orderId, OrderStatus.CANCELLED.ordinal());
+
+                double totalMoney = orderDisplay.getTotalMoney();
+                String email = orderDisplay.getUserInfo().getEmail();
+
+                // return money
+                moneyDao.plusMoney(email, totalMoney);
+                moneyDao.minusMoney("administrator", totalMoney);
+
+                // return score and consumption
+                userDao.backUserScore(email, totalMoney);
+                break;
+            }
+            case SETTLED: {
+                // booked seats released
+                seatDao.releaseBookedSeats(orderDisplay.getPlanForm().getPlanId(), orderDisplay.getSeatForms());
+
+                // cancel order
+                orderDao.changeOrderStatus(orderId, OrderStatus.CANCELLED.ordinal());
+
+                double totalMoney = orderDisplay.getTotalMoney();
+                String email = orderDisplay.getUserInfo().getEmail();
+
+                // return money
+                moneyDao.plusMoney(email, totalMoney);
+                moneyDao.minusMoney(orderDisplay.getSiteDisplay().getId(), totalMoney);
+
+                // return score and consumption
+                userDao.backUserScore(email, totalMoney);
+                break;
+            }
+        }
+
     }
 
     private List<SeatDisplay> doBookSeats(List<SeatDisplay> seatDisplays, List<SeatNums> seatNums) throws SeatNotEnoughException {

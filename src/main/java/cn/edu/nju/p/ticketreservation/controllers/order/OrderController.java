@@ -87,9 +87,8 @@ public class OrderController {
 
     @GetMapping("/unsubscribe")
     public BaseResult unsubscribeOrder(@RequestParam("orderId") int orderId) {
-
-
-        return null;
+        orderService.unsubscribe(orderId);
+        return new BaseResult<>("UnSubsribe order successfully!", ErrorCode.SUCCESS);
     }
 
 }

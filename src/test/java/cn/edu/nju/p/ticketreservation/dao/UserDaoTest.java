@@ -1,6 +1,5 @@
-package cn.edu.nju.p.ticketreservation.service.impl;
+package cn.edu.nju.p.ticketreservation.dao;
 
-import cn.edu.nju.p.ticketreservation.service.OrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +10,13 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OrderServiceImplTest {
+public class UserDaoTest {
 
     @Autowired
-    private OrderService service;
+    private UserDao userDao;
 
     @Test
-    public void getOrder() {
-        System.out.println(service.getOrder(33));
-    }
-
-    @Test
-    public void unsubscribe() {
-
-        service.unsubscribe(30);
+    public void updateUserScore() {
+        userDao.updateUserScore("731744067@qq.com", 100);
     }
 }

@@ -15,6 +15,9 @@ public interface SeatDao {
     @UpdateProvider(type = SeatBookProvider.class, method = "bookSeats")
     void bookSeats(@Param("planId") int planId, @Param("seats") List<SeatForm> seatForms);
 
+    @UpdateProvider(type = SeatBookProvider.class, method = "releaseSeats")
+    void releaseBookedSeats(@Param("planId") int planId, @Param("seats") List<SeatForm> seatForms);
+
     @Select("select * from plan_seats where planId=#{planId}")
     @Results({
             @Result(property = "x", column = "seat_x"),
@@ -34,5 +37,4 @@ public interface SeatDao {
             @Result(property = "seatStatus", column = "status")
     })
     List<SeatDisplay> getAllNotBookedSeatsOfPlan(@Param("planId") int planId);
-
 }

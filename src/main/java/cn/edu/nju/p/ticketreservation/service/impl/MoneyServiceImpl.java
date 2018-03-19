@@ -34,7 +34,7 @@ public class MoneyServiceImpl implements MoneyService {
         moneyDao.minusMoney(moneyPay.getEmail(), moneyPay.getTotalMoney());
 
         if (orderNotPayed(orderId)) {
-            orderDao.changeOrderStatus(orderId, OrderStatus.NOT_SETTLE.ordinal());
+            orderDao.changeOrderStatus(orderId, OrderStatus.PAYED.ordinal());
         } else {
             throw new OrderCancelledException("Order of " + orderId + " has already cancelled!");
         }

@@ -19,6 +19,9 @@ public interface UserDao {
     @Update("update user_info set infoState=1 where email=#{email}")
     void cancelUser(String email);
 
-    @Update("update user_info set score=score+#{money} and consumption=consumption+#{money} where email=#{email}")
+    @Update("update user_info set score=score+#{money},consumption=consumption+#{money} where email=#{email}")
     void updateUserScore(@Param("email") String email, @Param("money") double money);
+
+    @Update("update user_info set score=score-#{money},consumption=consumption-#{money} where email=#{email}")
+    void backUserScore(@Param("email") String email, @Param("money") double money);
 }
