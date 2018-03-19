@@ -169,6 +169,13 @@ public class OrderServiceImpl implements OrderService {
         return orderEntities.stream().map(OrderDisplay::new).collect(Collectors.toList());
     }
 
+    @Override
+    public List<OrderDisplay> getAllSiteOrders(String siteId) {
+        int siteIdInt = Integer.valueOf(siteId);
+        List<OrderEntity> orderEntities = orderDao.getAllSiteOrders(siteIdInt);
+        return orderEntities.stream().map(OrderDisplay::new).collect(Collectors.toList());
+    }
+
     private List<SeatDisplay> doBookSeats(List<SeatDisplay> seatDisplays, List<SeatNums> seatNums) throws SeatNotEnoughException {
 
         if (seatNums == null || seatNums.size() == 0) {

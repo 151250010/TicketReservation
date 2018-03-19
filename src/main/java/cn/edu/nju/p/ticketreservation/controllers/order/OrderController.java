@@ -91,9 +91,14 @@ public class OrderController {
         return new BaseResult<>("UnSubsribe order successfully!", ErrorCode.SUCCESS);
     }
 
-    @GetMapping("/allOrders")
+    @GetMapping("/allOrders/user")
     public BaseResult getAllUserOrders(@RequestParam("email") String email) {
         return new BaseResult<>(orderService.getAllOrders(email), ErrorCode.SUCCESS);
+    }
+
+    @GetMapping("/allOrders/site")
+    public BaseResult getAllSiteOrders(@RequestParam("siteId") String siteId) {
+        return new BaseResult<>(orderService.getAllSiteOrders(siteId), ErrorCode.SUCCESS);
     }
 
 }

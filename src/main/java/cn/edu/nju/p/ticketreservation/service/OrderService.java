@@ -18,4 +18,7 @@ public interface OrderService {
     void unsubscribe(int orderId);
 
     List<OrderDisplay> getAllOrders(String email);
+
+    List<OrderDisplay> getAllSiteOrders(String siteId);
+
 }
