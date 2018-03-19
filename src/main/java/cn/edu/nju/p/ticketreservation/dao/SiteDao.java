@@ -20,11 +20,6 @@ public interface SiteDao {
     void updateSite(@Param("site") Site site);
 
     @Select("select * from site where id=#{siteId}")
-//    @Results({
-////            @Result(property = "seatCountX",column = "seat_count_x"),
-////            @Result(property = "seatCountY",column = "seat_count_y"),
-////            @Result(property = "seatCountZ",column = "seat_count_z")
-////    })
     Site getSite(int siteId);
 
     @Select("select * from site")

@@ -1,5 +1,7 @@
 package cn.edu.nju.p.ticketreservation.utils.mybatis.provider;
 
+import cn.edu.nju.p.ticketreservation.interact.display.SeatDisplay;
+import cn.edu.nju.p.ticketreservation.interact.input.RandomSelectionOrder;
 import cn.edu.nju.p.ticketreservation.interact.input.SeatForm;
 import cn.edu.nju.p.ticketreservation.interact.input.SeatSelectionOrder;
 
@@ -31,6 +33,34 @@ public class OrderProvider {
                 "','" +
                 seatSql +
                 "',0,0)";
+        return sql;
+    }
+
+    public String insertRandomOrder(Map map) {
+
+        RandomSelectionOrder order = (RandomSelectionOrder) map.get("order");
+        List<SeatDisplay> seats = (List<SeatDisplay>) map.get("seats");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < seats.size(); i++) {
+            SeatDisplay seatForm = seats.get(i);
+            if (i == (seats.size() - 1)) {
+                stringBuilder.append(seatForm.toString());
+            } else {
+                stringBuilder.append(seatForm.toString()).append(';');
+            }
+        }
+
+        String sql = "insert into t_order (planId,email,orderTime,seats,orderType,orderStatus) values " +
+                "('" +
+                order.getPlanId() +
+                "','" +
+                order.getEmail() +
+                "','" +
+                order.getOrderTime() +
+                "','" +
+                stringBuilder +
+                "',1,0)";
+
         return sql;
     }
 }

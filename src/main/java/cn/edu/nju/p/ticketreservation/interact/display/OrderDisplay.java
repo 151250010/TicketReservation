@@ -12,6 +12,7 @@ public class OrderDisplay {
     private PlanForm planForm;
     private SiteDisplay siteDisplay;
     private List<SeatForm> seatForms;
+    private String orderType = "Seat Selection";
 
     public int getOrderId() {
         return orderId;
@@ -53,4 +54,11 @@ public class OrderDisplay {
         this.seatForms = seatForms;
     }
 
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(int orderType) {
+        this.orderType = orderType == 0 ? "Seat Selection" : "Random Selection";
+    }
 }

@@ -50,4 +50,10 @@ public class SeatDisplay {
     public void setSeatStatus(int seatStatus) {
         this.seatStatus = SeatStatus.resolveDBSeatStatus(seatStatus);
     }
+
+    @Override
+    public String toString() {
+        return "(" + x + ',' + y + ',' + z + ")";
+    }
+
 }

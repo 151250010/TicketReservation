@@ -24,5 +24,5 @@ public class ErrorCode {
 
     public static final int MONEY_NOT_ENOUGH = 33330001;
     public static final int ORDER_HAS_CANCELLED = 33330002;
-
+    public static final int SEAT_NOT_ENOUGH = 33330003;
 }

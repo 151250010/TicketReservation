@@ -87,4 +87,9 @@ public class GlobalNormalExceptionHandler {
     public BaseResult orderHasCancelled(OrderCancelledException e) {
         return new BaseResult<>(e.getMessage(), ErrorCode.ORDER_HAS_CANCELLED);
     }
+
+    @ExceptionHandler({SeatNotEnoughException.class})
+    public BaseResult seatNotEnoughException(SeatNotEnoughException e) {
+        return new BaseResult<>(e.getMessage(), ErrorCode.SEAT_NOT_ENOUGH);
+    }
 }

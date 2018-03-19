@@ -24,4 +24,15 @@ public interface SeatDao {
             @Result(property = "seatStatus", column = "status")
     })
     List<SeatDisplay> getAllSeatsOfPlan(@Param("planId") int planId);
+
+    @Select("select * from plan_seats where planId=#{planId} and status=0")
+    @Results({
+            @Result(property = "x", column = "seat_x"),
+            @Result(property = "y", column = "seat_y"),
+            @Result(property = "z", column = "seat_z"),
+            @Result(property = "price", column = "price"),
+            @Result(property = "seatStatus", column = "status")
+    })
+    List<SeatDisplay> getAllNotBookedSeatsOfPlan(@Param("planId") int planId);
+
 }

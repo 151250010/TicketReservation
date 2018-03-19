@@ -9,6 +9,15 @@ public class SeatForm implements Serializable{
     private int z;
     private double price;
 
+    public SeatForm(){}
+
+    public SeatForm(int x, int y, int z, double price) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.price = price;
+    }
+
     public int getX() {
         return x;
     }

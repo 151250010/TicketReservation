@@ -2,11 +2,13 @@ package cn.edu.nju.p.ticketreservation.controllers.order;
 
 import cn.edu.nju.p.ticketreservation.base.BaseResult;
 import cn.edu.nju.p.ticketreservation.base.ErrorCode;
+import cn.edu.nju.p.ticketreservation.exception.SeatNotEnoughException;
 import cn.edu.nju.p.ticketreservation.exception.UserNotRegisterException;
 import cn.edu.nju.p.ticketreservation.interact.display.OrderDisplay;
 import cn.edu.nju.p.ticketreservation.interact.display.SiteDisplay;
 import cn.edu.nju.p.ticketreservation.interact.display.UserInfo;
 import cn.edu.nju.p.ticketreservation.interact.input.PlanForm;
+import cn.edu.nju.p.ticketreservation.interact.input.RandomSelectionOrder;
 import cn.edu.nju.p.ticketreservation.interact.input.SeatSelectionOrder;
 import cn.edu.nju.p.ticketreservation.service.OrderService;
 import cn.edu.nju.p.ticketreservation.service.PlanService;
@@ -40,7 +42,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping
+    @PostMapping("/selection")
     public BaseResult insertSeatSelectionOrder(@RequestBody @Validated SeatSelectionOrder order) throws UserNotRegisterException {
 
         OrderDisplay orderDisplay = orderService.addOrder(order);
@@ -61,6 +63,28 @@ public class OrderController {
         cacheUtil.putCacheWithExpireTime(orderDisplay.getOrderId() + OrderServiceImpl.CACHE_ORDER_POSTFIX, orderDisplay, 60 * 30);
         return new BaseResult<>(orderDisplay, ErrorCode.SUCCESS);
     }
+
+    @PostMapping("/random")
+    public BaseResult insertRandomSelectionOrder(@RequestBody @Validated RandomSelectionOrder order) throws SeatNotEnoughException, UserNotRegisterException {
+
+        OrderDisplay orderDisplay = orderService.addOrder(order);
+        String email = order.getEmail();
+        UserInfo userInfo = userService.getUserInfoByEmail(email);
+
+        int planId = order.getPlanId();
+        PlanForm planForm = planService.getPlan(planId);
+
+        String siteId = order.getSiteId();
+        SiteDisplay siteDisplay = siteService.getSiteInfo(siteId);
+
+        orderDisplay.setUserInfo(userInfo);
+        orderDisplay.setPlanForm(planForm);
+        orderDisplay.setSiteDisplay(siteDisplay);
+
+        cacheUtil.putCacheWithExpireTime(orderDisplay.getOrderId() + OrderServiceImpl.CACHE_ORDER_POSTFIX, orderDisplay, 60 * 30);
+        return new BaseResult<>(orderDisplay, ErrorCode.SUCCESS);
+    }
+
 
 
 }
