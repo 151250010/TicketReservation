@@ -25,6 +25,9 @@ public class RandomSelectionOrder {
 
     private int planId;
 
+    @NotNull
+    private double money;
+
     @Length(min = 7, max = 7)
     private String siteId;
 
@@ -82,5 +85,13 @@ public class RandomSelectionOrder {
 
     public void setSiteId(String siteId) {
         this.siteId = siteId;
+    }
+
+    public double getMoney() {
+        return money;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
     }
 }

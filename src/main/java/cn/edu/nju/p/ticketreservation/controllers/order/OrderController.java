@@ -2,6 +2,7 @@ package cn.edu.nju.p.ticketreservation.controllers.order;
 
 import cn.edu.nju.p.ticketreservation.base.BaseResult;
 import cn.edu.nju.p.ticketreservation.base.ErrorCode;
+import cn.edu.nju.p.ticketreservation.enums.OrderStatus;
 import cn.edu.nju.p.ticketreservation.exception.SeatNotEnoughException;
 import cn.edu.nju.p.ticketreservation.exception.UserNotRegisterException;
 import cn.edu.nju.p.ticketreservation.interact.display.OrderDisplay;
@@ -18,10 +19,7 @@ import cn.edu.nju.p.ticketreservation.service.impl.OrderServiceImpl;
 import cn.edu.nju.p.ticketreservation.utils.RedisCacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/order")
@@ -59,6 +57,7 @@ public class OrderController {
         orderDisplay.setUserInfo(userInfo);
         orderDisplay.setPlanForm(planForm);
         orderDisplay.setSiteDisplay(siteDisplay);
+        orderDisplay.setOrderStatus(OrderStatus.NOT_PAYED);
 
         cacheUtil.putCacheWithExpireTime(orderDisplay.getOrderId() + OrderServiceImpl.CACHE_ORDER_POSTFIX, orderDisplay, 60 * 30);
         return new BaseResult<>(orderDisplay, ErrorCode.SUCCESS);
@@ -80,11 +79,17 @@ public class OrderController {
         orderDisplay.setUserInfo(userInfo);
         orderDisplay.setPlanForm(planForm);
         orderDisplay.setSiteDisplay(siteDisplay);
+        orderDisplay.setOrderStatus(OrderStatus.NOT_PAYED);
 
         cacheUtil.putCacheWithExpireTime(orderDisplay.getOrderId() + OrderServiceImpl.CACHE_ORDER_POSTFIX, orderDisplay, 60 * 30);
         return new BaseResult<>(orderDisplay, ErrorCode.SUCCESS);
     }
 
+    @GetMapping("/unsubscribe")
+    public BaseResult unsubscribeOrder(@RequestParam("orderId") int orderId) {
 
+
+        return null;
+    }
 
 }

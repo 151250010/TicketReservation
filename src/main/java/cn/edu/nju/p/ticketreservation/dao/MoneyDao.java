@@ -19,5 +19,4 @@ public interface MoneyDao {
     @Insert("insert into t_money (email,balance) values (#{email},0)")
     void addMoneyAccount(@Param("email") String email);
 
-
 }

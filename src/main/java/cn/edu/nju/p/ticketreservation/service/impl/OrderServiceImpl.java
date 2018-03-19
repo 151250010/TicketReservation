@@ -2,6 +2,8 @@ package cn.edu.nju.p.ticketreservation.service.impl;
 
 import cn.edu.nju.p.ticketreservation.dao.OrderDao;
 import cn.edu.nju.p.ticketreservation.dao.SeatDao;
+import cn.edu.nju.p.ticketreservation.dao.UserDao;
+import cn.edu.nju.p.ticketreservation.dao.entity.OrderEntity;
 import cn.edu.nju.p.ticketreservation.exception.SeatNotEnoughException;
 import cn.edu.nju.p.ticketreservation.interact.display.OrderDisplay;
 import cn.edu.nju.p.ticketreservation.interact.display.SeatDisplay;
@@ -10,6 +12,7 @@ import cn.edu.nju.p.ticketreservation.interact.input.SeatForm;
 import cn.edu.nju.p.ticketreservation.interact.input.SeatNums;
 import cn.edu.nju.p.ticketreservation.interact.input.SeatSelectionOrder;
 import cn.edu.nju.p.ticketreservation.service.OrderService;
+import cn.edu.nju.p.ticketreservation.utils.RedisCacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +33,12 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private SeatDao seatDao;
 
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private RedisCacheUtil cacheUtil;
+
     public static final String CACHE_ORDER_POSTFIX = "_order_info";
 
     @Override
@@ -42,9 +51,12 @@ public class OrderServiceImpl implements OrderService {
         int orderId = order.getOrderId();
         OrderDisplay orderDisplay = new OrderDisplay();
         orderDisplay.setOrderId(orderId);
+        orderDisplay.setTotalMoney(order.getMoney());
         orderDisplay.setSeatForms(order.getSeatForms());
 
         seatDao.bookSeats(order.getPlanId(), order.getSeatForms());
+
+        userDao.updateUserScore(order.getUserEmail(), order.getMoney());
         return orderDisplay;
     }
 
@@ -65,10 +77,25 @@ public class OrderServiceImpl implements OrderService {
         OrderDisplay orderDisplay = new OrderDisplay();
         orderDisplay.setOrderType(1);
         orderDisplay.setOrderId(orderId);
+        orderDisplay.setTotalMoney(order.getMoney());
         orderDisplay.setSeatForms(toBeBookedSeats);
 
         seatDao.bookSeats(order.getPlanId(), toBeBookedSeats);
+
+        userDao.updateUserScore(order.getEmail(), order.getMoney());
         return orderDisplay;
+    }
+
+    @Override
+    public OrderDisplay getOrder(int orderId) {
+
+        String key = orderId + CACHE_ORDER_POSTFIX;
+        if (cacheUtil.cacheExist(key)) {
+            return cacheUtil.getCache(key, OrderDisplay.class);
+        }
+
+        OrderEntity orderEntity = orderDao.getOrder(orderId);
+        return new OrderDisplay(orderEntity);
     }
 
     private List<SeatDisplay> doBookSeats(List<SeatDisplay> seatDisplays, List<SeatNums> seatNums) throws SeatNotEnoughException {

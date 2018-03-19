@@ -18,6 +18,12 @@ public class SeatForm implements Serializable{
         this.price = price;
     }
 
+    public SeatForm(int x, int y, int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
     public int getX() {
         return x;
     }

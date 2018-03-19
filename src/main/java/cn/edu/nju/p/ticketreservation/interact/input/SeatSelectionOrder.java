@@ -26,6 +26,8 @@ public class SeatSelectionOrder implements Serializable {
     @Null
     private String orderTime;
 
+    private double money;
+
     public int getOrderId() {
         return orderId;
     }
@@ -72,5 +74,13 @@ public class SeatSelectionOrder implements Serializable {
 
     public void setOrderTime(String orderTime) {
         this.orderTime = orderTime;
+    }
+
+    public double getMoney() {
+        return money;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
     }
 }

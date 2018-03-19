@@ -23,14 +23,18 @@ public class OrderProvider {
                 seatSql.append(seatForm.toString()).append(';');
             }
         }
-        String sql = "insert into t_order (planId,email,orderTime,seats,orderType,orderStatus) values " +
+        String sql = "insert into t_order (planId,siteId,email,orderTime,totalMoney,seats,orderType,orderStatus) values " +
                 "('" +
                 order.getPlanId() +
+                "','" +
+                order.getSiteId() +
                 "','" +
                 order.getUserEmail() +
                 "','" +
                 order.getOrderTime() +
-                "','" +
+                "'," +
+                order.getMoney() +
+                ",'" +
                 seatSql +
                 "',0,0)";
         return sql;
@@ -50,14 +54,18 @@ public class OrderProvider {
             }
         }
 
-        String sql = "insert into t_order (planId,email,orderTime,seats,orderType,orderStatus) values " +
+        String sql = "insert into t_order (planId,siteId,email,orderTime,totalMoney,seats,orderType,orderStatus) values " +
                 "('" +
                 order.getPlanId() +
+                "','" +
+                order.getSiteId() +
                 "','" +
                 order.getEmail() +
                 "','" +
                 order.getOrderTime() +
-                "','" +
+                "'," +
+                order.getMoney() +
+                ",'" +
                 stringBuilder +
                 "',1,0)";
 

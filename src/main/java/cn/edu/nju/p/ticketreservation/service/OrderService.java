@@ -11,4 +11,5 @@ public interface OrderService {
 
     OrderDisplay addOrder(RandomSelectionOrder order) throws SeatNotEnoughException;
 
+    OrderDisplay getOrder(int orderId);
 }
