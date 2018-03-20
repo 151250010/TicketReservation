@@ -20,4 +20,9 @@ public class MoneyDaoTest {
     public void testAddMoney() {
         moneyDao.plusMoney("administrator", 100);
     }
+
+    @Test
+    public void getSiteMoney() {
+        System.out.println(moneyDao.getSiteMoney(30));
+    }
 }

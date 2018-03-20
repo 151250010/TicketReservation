@@ -94,7 +94,6 @@ public class OrderController {
     @GetMapping("/allOrders/user")
     public BaseResult getAllUserOrders(@RequestParam("email") String email) {
         return new BaseResult<>(orderService.getAllOrders(email), ErrorCode.SUCCESS);
-
     }
 
     @GetMapping("/allOrders/site")

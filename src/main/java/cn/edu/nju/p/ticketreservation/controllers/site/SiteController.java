@@ -35,4 +35,6 @@ public class SiteController {
         List<SiteDisplay> siteDisplays = siteService.getAllSites();
         return new BaseResult<>(siteDisplays, ErrorCode.SUCCESS);
     }
+
+
 }

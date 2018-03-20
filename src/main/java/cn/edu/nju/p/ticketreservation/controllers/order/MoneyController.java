@@ -8,10 +8,7 @@ import cn.edu.nju.p.ticketreservation.interact.input.MoneyPay;
 import cn.edu.nju.p.ticketreservation.service.MoneyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/money")
@@ -24,6 +21,11 @@ public class MoneyController {
     public BaseResult payMoney(@RequestBody @Validated MoneyPay moneyPay) throws MoneyNotEnoughException, OrderCancelledException {
         moneyService.payMoney(moneyPay);
         return new BaseResult<>("Money has already payed for the order!", ErrorCode.SUCCESS);
+    }
+
+    @GetMapping("/site")
+    public BaseResult getAllSiteMoney(@RequestParam("siteId") String siteId) {
+        return new BaseResult<>(moneyService.getSiteMoney(siteId), ErrorCode.SUCCESS);
     }
 
 }

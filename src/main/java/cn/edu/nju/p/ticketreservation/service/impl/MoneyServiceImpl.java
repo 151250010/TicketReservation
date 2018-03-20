@@ -2,14 +2,18 @@ package cn.edu.nju.p.ticketreservation.service.impl;
 
 import cn.edu.nju.p.ticketreservation.dao.MoneyDao;
 import cn.edu.nju.p.ticketreservation.dao.OrderDao;
+import cn.edu.nju.p.ticketreservation.dao.entity.SiteMoney;
 import cn.edu.nju.p.ticketreservation.enums.OrderStatus;
 import cn.edu.nju.p.ticketreservation.exception.MoneyNotEnoughException;
 import cn.edu.nju.p.ticketreservation.exception.OrderCancelledException;
+import cn.edu.nju.p.ticketreservation.interact.display.SiteMoneyDisplay;
 import cn.edu.nju.p.ticketreservation.interact.input.MoneyPay;
 import cn.edu.nju.p.ticketreservation.service.MoneyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class MoneyServiceImpl implements MoneyService {
@@ -39,6 +43,45 @@ public class MoneyServiceImpl implements MoneyService {
             throw new OrderCancelledException("Order of " + orderId + " has already cancelled!");
         }
 
+    }
+
+    @Override
+    public SiteMoneyDisplay getSiteMoney(String siteId) {
+
+        List<SiteMoney> moneyList = moneyDao.getSiteMoney(Integer.valueOf(siteId));
+        SiteMoneyDisplay result = new SiteMoneyDisplay(siteId, 0, 0, 0);
+
+        if (moneyList.size() == 0) {
+            return result;
+        } else if (moneyList.size() == 1) {
+            SiteMoney siteMoney = moneyList.get(0);
+            if (siteMoney.getOrderStatus() == 2) {
+                result.setNotSettledMoney(siteMoney.getAllMoney());
+                result.setTotalMoney(siteMoney.getAllMoney());
+                result.setSettledMoney(0);
+                return result;
+            } else if (siteMoney.getOrderStatus() == 3) {
+                result.setSettledMoney(siteMoney.getAllMoney());
+                result.setTotalMoney(siteMoney.getAllMoney());
+                result.setNotSettledMoney(0);
+                return result;
+            }
+        } else if (moneyList.size() == 2) {
+            SiteMoney siteMoney1 = moneyList.get(0);
+            SiteMoney siteMoney2 = moneyList.get(1);
+            if (siteMoney1.getOrderStatus() == 2) {
+                result.setNotSettledMoney(siteMoney1.getAllMoney());
+                result.setSettledMoney(siteMoney2.getAllMoney());
+                result.setTotalMoney(siteMoney1.getAllMoney() + siteMoney2.getAllMoney());
+            } else {
+                result.setNotSettledMoney(siteMoney2.getAllMoney());
+                result.setSettledMoney(siteMoney1.getAllMoney());
+                result.setTotalMoney(siteMoney1.getAllMoney() + siteMoney2.getAllMoney());
+            }
+            return result;
+        }
+
+        return result;
     }
 
     private boolean moneyEnough(String email, double totalMoney) {
