@@ -62,10 +62,20 @@ public class SiteServiceImpl implements SiteService {
 
     @Override
     public List<SiteDisplay> getAllSites() {
-
         List<Site> sites = siteDao.getAllSites();
         assert sites != null && sites.size() != 0 : "No Sites Found!";
         return sites.stream().map(SiteDisplay::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SiteDisplay> getAllUncheckSites() {
+        List<Site> sites = siteDao.getAllUncheckSites();
+        return sites.stream().map(SiteDisplay::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateSiteStatus(String siteId, int status) {
+        siteDao.updateSiteStatus(Integer.valueOf(siteId), status);
     }
 
 }

@@ -1,5 +1,6 @@
 package cn.edu.nju.p.ticketreservation.dao;
 
+import cn.edu.nju.p.ticketreservation.dao.entity.MoneyCount;
 import cn.edu.nju.p.ticketreservation.dao.entity.SiteMoney;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -24,4 +25,14 @@ public interface MoneyDao {
 
     @Select("select sum(totalMoney) as allMoney,orderStatus from t_order where siteId=#{siteId} and orderStatus in (2,3) group by orderStatus")
     List<SiteMoney> getSiteMoney(@Param("siteId") int siteId);
+
+    @Update("call settle(#{rate})")
+    void settle(double rate);
+
+    @Select("select * from t_money")
+    @Results({
+            @Result(property = "email",column = "email"),
+            @Result(property = "money",column = "balance")
+    })
+    List<MoneyCount> getAllMoneyCount();
 }

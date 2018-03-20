@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -56,4 +58,11 @@ public class UserServiceImpl implements UserService {
     public void cancelAUser(String email) {
         userDao.cancelUser(email);
     }
+
+    @Override
+    public List<UserInfo> getAllUsers() {
+        List<cn.edu.nju.p.ticketreservation.dao.entity.UserInfo> userInfos = userDao.getAllUsers();
+        return userInfos.stream().map(UserInfo::new).collect(Collectors.toList());
+    }
+
 }

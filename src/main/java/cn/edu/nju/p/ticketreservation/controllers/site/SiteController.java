@@ -36,5 +36,16 @@ public class SiteController {
         return new BaseResult<>(siteDisplays, ErrorCode.SUCCESS);
     }
 
+    @GetMapping("/all/uncheck")
+    public BaseResult getAllUnCheckSites() {
+        List<SiteDisplay> siteDisplays = siteService.getAllUncheckSites();
+        return new BaseResult<>(siteDisplays, ErrorCode.SUCCESS);
+    }
 
+    @GetMapping("/check")
+    public BaseResult checkSite(@RequestParam("siteId") String siteId, @RequestParam("newStatus")int status) {
+        assert status == 1 || status == 3;
+        siteService.updateSiteStatus(siteId, status);
+        return new BaseResult<>("update site status successfully!", ErrorCode.SUCCESS);
+    }
 }

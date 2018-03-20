@@ -28,4 +28,14 @@ public class MoneyController {
         return new BaseResult<>(moneyService.getSiteMoney(siteId), ErrorCode.SUCCESS);
     }
 
+    @GetMapping("/settle")
+    public BaseResult settleMoneyToSite(@RequestParam("rate") double rate) {
+        moneyService.settle(rate);
+        return new BaseResult<>("Settle Money Successfully!", ErrorCode.SUCCESS);
+    }
+
+    @GetMapping("/all")
+    public BaseResult getAllMoneys() {
+        return new BaseResult<>(moneyService.getAllMoney(), ErrorCode.SUCCESS);
+    }
 }

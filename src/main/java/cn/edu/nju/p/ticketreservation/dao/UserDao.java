@@ -4,6 +4,7 @@ import cn.edu.nju.p.ticketreservation.dao.entity.UserInfo;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Mapper
@@ -24,4 +25,7 @@ public interface UserDao {
 
     @Update("update user_info set score=score-#{money},consumption=consumption-#{money} where email=#{email}")
     void backUserScore(@Param("email") String email, @Param("money") double money);
+
+    @Select("select * from user_info")
+    List<UserInfo> getAllUsers();
 }

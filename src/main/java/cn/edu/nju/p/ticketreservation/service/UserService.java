@@ -4,6 +4,8 @@ import cn.edu.nju.p.ticketreservation.exception.UserNotRegisterException;
 import cn.edu.nju.p.ticketreservation.interact.input.UserRegInfo;
 import cn.edu.nju.p.ticketreservation.interact.display.UserInfo;
 
+import java.util.List;
+
 public interface UserService {
 
     UserInfo getUserInfoByEmail(String email) throws UserNotRegisterException;
@@ -11,4 +13,6 @@ public interface UserService {
     void addUserInfo(UserRegInfo info);
 
     void cancelAUser(String email);
+
+    List<UserInfo> getAllUsers();
 }

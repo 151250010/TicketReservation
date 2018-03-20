@@ -25,4 +25,9 @@ public interface SiteDao {
     @Select("select * from site")
     List<Site> getAllSites();
 
+    @Select("select * from site where check_pass in (0,2)")
+    List<Site> getAllUncheckSites();
+
+    @Update("update site set check_pass=#{newStatus} where id=#{siteId}")
+    void updateSiteStatus(@Param("siteId") Integer siteId, @Param("newStatus") int status);
 }

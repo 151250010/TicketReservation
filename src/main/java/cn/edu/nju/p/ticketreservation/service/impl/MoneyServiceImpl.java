@@ -2,6 +2,7 @@ package cn.edu.nju.p.ticketreservation.service.impl;
 
 import cn.edu.nju.p.ticketreservation.dao.MoneyDao;
 import cn.edu.nju.p.ticketreservation.dao.OrderDao;
+import cn.edu.nju.p.ticketreservation.dao.entity.MoneyCount;
 import cn.edu.nju.p.ticketreservation.dao.entity.SiteMoney;
 import cn.edu.nju.p.ticketreservation.enums.OrderStatus;
 import cn.edu.nju.p.ticketreservation.exception.MoneyNotEnoughException;
@@ -82,6 +83,16 @@ public class MoneyServiceImpl implements MoneyService {
         }
 
         return result;
+    }
+
+    @Override
+    public void settle(double rate) {
+        moneyDao.settle(rate);
+    }
+
+    @Override
+    public List<MoneyCount> getAllMoney() {
+        return moneyDao.getAllMoneyCount();
     }
 
     private boolean moneyEnough(String email, double totalMoney) {

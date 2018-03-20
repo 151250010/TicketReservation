@@ -14,4 +14,8 @@ public interface SiteService {
     SiteDisplay getSiteInfo(String siteId);
 
     List<SiteDisplay> getAllSites();
+
+    List<SiteDisplay> getAllUncheckSites();
+
+    void updateSiteStatus(String siteId, int status);
 }

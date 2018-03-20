@@ -42,4 +42,9 @@ public class UserInfoController {
         service.cancelAUser(email);
         return new BaseResult<>("Cancel user " + email + " successfully!", 0);
     }
+
+    @GetMapping("/all")
+    public BaseResult getAllUsers() {
+        return new BaseResult<>(service.getAllUsers(), ErrorCode.SUCCESS);
+    }
 }
